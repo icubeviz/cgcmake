@@ -1,0 +1,21 @@
+include(bd_debug)
+
+if(WIN32)
+	include(bd_msvc)
+else()
+	include(bd_gcc)
+endif()
+
+include(bd_win32)
+
+macro(link_with_os _target)
+	if(UNIX)
+		if(APPLE)
+			link_with_osx(${PROJECT_NAME})
+		else()
+			link_with_linux(${PROJECT_NAME})
+		endif()
+	else()
+		link_with_windows(${PROJECT_NAME})
+	endif()
+endmacro()
