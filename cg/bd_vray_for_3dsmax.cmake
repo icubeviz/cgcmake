@@ -38,12 +38,13 @@ endif()
 
 add_definitions(-DVRAY_EXPORTS -DVRAY_VERSION=${VRAY_VERSION})
 
-message(STATUS "Using V-Ray for 3dsmax SDK include path: ${VRAY_FOR_3DSMAX_INCPATH}")
+message_array("Using V-Ray for 3dsmax SDK include path" VRAY_FOR_3DSMAX_INCPATH)
+message_array("Using V-Ray for 3dsmax SDK library path" VRAY_FOR_3DSMAX_LIBPATH)
+
+link_directories(${VRAY_FOR_3DSMAX_LIBPATH})
+
 include_directories(${VRAY_FOR_3DSMAX_INCPATH})
 set(CMAKE_REQUIRED_INCLUDES "${CMAKE_REQUIRED_INCLUDES};${VRAY_FOR_3DSMAX_INCPATH}")
-
-message(STATUS "Using V-Ray for 3dsmax SDK library path: ${VRAY_FOR_3DSMAX_LIBPATH}")
-link_directories(${VRAY_FOR_3DSMAX_LIBPATH})
 
 set(VRAY_LIB_SUFFIX "_s")
 

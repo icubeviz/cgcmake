@@ -127,8 +127,8 @@ elseif(3DSMAX_VERSION VERSION_LESS 2013)
 	set(MENTALRAY_SHADER_PATH "${3DSMAX_ROOT}/mentalimages/shaders_autoload/mentalray/shaders")
 	set(MENTALRAY_MI_PATH     "${3DSMAX_ROOT}/mentalimages/shaders_autoload/mentalray/include")
 else()
-	set(MENTALRAY_SHADER_PATH "${3DSMAX_ROOT}/NVIDIA/shaders_autoload/mentalray/shaders")
-	set(MENTALRAY_MI_PATH     "${3DSMAX_ROOT}/NVIDIA/shaders_autoload/mentalray/include")
+	set(MENTALRAY_SHADER_PATH "${3DSMAX_ROOT}/Plugins/NVIDIA/Shaders/shaders_autoload/mentalray/shaders")
+	set(MENTALRAY_MI_PATH     "${3DSMAX_ROOT}/Plugins/NVIDIA/Shaders/shaders_autoload/mentalray/include")
 endif()
 
 file(TO_CMAKE_PATH "${MENTALRAY_SHADER_PATH}" MENTALRAY_SHADER_PATH)
@@ -142,6 +142,8 @@ link_directories(${3DSMAX_LIBPATH})
 macro(link_with_3dsmax _target _suffix)
 	message_array("Using 3dsmax SDK include path" 3DSMAX_INCPATH)
 	message_array("Using 3dsmax SDK library path" 3DSMAX_LIBPATH)
+
+	message(STATUS "MentalRay install path: ${MENTALRAY_MI_PATH}")
 
 	set_target_properties(${_target} PROPERTIES SUFFIX ${_suffix})
 
