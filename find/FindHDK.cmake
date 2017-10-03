@@ -98,7 +98,7 @@ if(NOT REQUESTED_HDK_VERSION VERSION_EQUAL FOUND_HDK_VERSION)
 endif()
 
 if(NOT HDK_FOUND AND HDK_FIND_REQUIRED)
-	message(FATAL_ERROR "Found HDK ${FOUND_HDK_VERSION}, uncompatible with required version ${HDK_FIND_VERSION}")
+	message(WARNING "Found HDK ${FOUND_HDK_VERSION}, uncompatible with required version ${HDK_FIND_VERSION}")
 endif()
 
 if(HOUDINI_QT_VERSION VERSION_GREATER 4)
