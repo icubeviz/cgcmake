@@ -22,7 +22,7 @@ else()
 	else()
 		set(VRAY_VC "vc11")
 		set(MSVC_COMPILER 2012)
-	endif())
+	endif()
 endif()
 
 set(VRAY_FOR_3DSMAX_LIBPATH)
