@@ -2,6 +2,7 @@ set(CMAKE_BUILD_TYPE_INIT "Release")
 set(CMAKE_BUILD_TYPE      "Release" CACHE STRING "Build type")
 
 # Check variables and convert slashes
+# TODO: Check for thouse vars only if needed.
 foreach(_env_var ICUBE_GLOBALS ICUBE_OUTPUT ICUBE_SDK ICUBE_INSTALLERS ICUBE_TMP)
     if ("$ENV{${_env_var}}" STREQUAL "")
         message(STATUS "Environment variable ${_env_var} is not set!")
