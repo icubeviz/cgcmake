@@ -19,6 +19,7 @@ else()
 	   VRAY_VERSION STREQUAL 40
 	)
 		set(VRAY_VC "vc14")
+		set(MSVC_COMPILER 2015)
 	else()
 		set(VRAY_VC "vc11")
 		set(MSVC_COMPILER 2012)
