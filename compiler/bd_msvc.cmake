@@ -182,7 +182,7 @@ elseif(CMAKE_GENERATOR STREQUAL "Ninja")
 			"C:/Program Files (x86)/Windows Kits/10/include/10.0.16299.0/winrt"
 		)
 
-		set(COMPILER_LIB
+		set(COMPILER_LIBPATH
 			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/ATLMFC/lib/x64"
 			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/lib/x64"
 			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/lib/x86/store/references"
