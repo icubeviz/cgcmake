@@ -21,7 +21,7 @@ endif()
 if(VRAY_VERSION STREQUAL 40)
 	set(VRAY_VC "vc14")
 	set(MSVC_COMPILER 2017)
-else()
+endif()
 
 set(VRAY_FOR_3DSMAX_LIBPATH)
 set(VRAY_FOR_3DSMAX_INCPATH)
