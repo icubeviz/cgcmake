@@ -185,16 +185,11 @@ elseif(CMAKE_GENERATOR STREQUAL "Ninja")
 		set(COMPILER_LIB
 			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/ATLMFC/lib/x64"
 			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/lib/x64"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/lib/x86/store/references"
 			"C:/Program Files (x86)/Windows Kits/10/lib/10.0.16299.0/ucrt/x64"
 			"C:/Program Files (x86)/Windows Kits/10/lib/10.0.16299.0/um/x64"
-		)
-
-		set(COMPILER_LIB
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/ATLMFC/lib/x64"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/lib/x64"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/lib/x86/store/references"
-			"C:/Program Files (x86)/Windows Kits/10/UnionMetadata/10.0.16299.0"
 			"C:/Program Files (x86)/Windows Kits/10/References/10.0.16299.0"
+			"C:/Program Files (x86)/Windows Kits/10/UnionMetadata/10.0.16299.0"
 			"C:/Windows/Microsoft.NET/Framework64/v4.0.30319"
 		)
 
