@@ -73,13 +73,17 @@ set(VRAY_FOR_3DSMAX_LIBS
 
 	vray${VRAY_LIB_VERSION}
 	vrender${VRAY_LIB_VERSION}
-
-	# Intel libs (from V-Ray SDK)
-	libirc
-	libircmt
-	libmmd
-	libmmt
 )
+
+# Intel libs (from V-Ray SDK, < 4.x only)
+if(VRAY_VERSION LESS 40)
+	list(APPEND VRAY_FOR_3DSMAX_LIBS
+		libirc
+		libircmt
+		libmmd
+		libmmt
+	)
+endif()
 
 macro(link_with_vray_for_3dsmax _target)
 	target_link_libraries(${_target} ${VRAY_FOR_3DSMAX_LIBS})
