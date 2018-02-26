@@ -1,16 +1,6 @@
 option(WITH_SECTIONS "Generate InstallBuilder sections file"  OFF)
 set(SECTIONS_FILE "" CACHE FILEPATH "Sections file path")
 
-
-macro(install_shared_library _target _path)
-	if(WIN32)
-		install(TARGETS ${_target} RUNTIME DESTINATION ${_path})
-	else()
-		install(TARGETS ${_target}         DESTINATION ${_path})
-	endif()
-endmacro()
-
-
 macro(install_bin _target _path)
 	if(WIN32)
 		install(TARGETS ${_target} RUNTIME DESTINATION ${_path})
@@ -19,12 +9,9 @@ macro(install_bin _target _path)
 	endif()
 endmacro()
 
-
-macro(write_to_section
-	_str)
-	file(APPEND "${SECTIONS_FILE}" "${_str}")
+macro(install_shared_library _target _path)
+	install_bin(${_target} ${_path})
 endmacro()
-
 
 macro(install_release
 	_target
@@ -38,34 +25,17 @@ macro(install_release
 		if(SECTIONS_FILE STREQUAL "")
 			message(FATAL_ERROR "\${SECTIONS_FILE} is not set!")
 		else()
-			set(_pluginInstallDir ${_installDirVarName})
-			set(_pluginInstallDir "\${${_pluginInstallDir}}")
-
 			# Strip illigal chars from section name
 			string(REPLACE "." "" _sectName "${_sectionName}")
 
-			# Get target filename from intermediate file location
-			cmake_policy(SET CMP0026 OLD) # TODO: convert to generator expression
-			get_target_property(_output_filepath ${_target} LOCATION)
-			get_filename_component(_output_filename ${_output_filepath} NAME)
-
-			write_to_section("        <component>\n")
-			write_to_section("            <name>${_sectName}</name>\n")
-			write_to_section("            <canBeEdited>1</canBeEdited>\n")
-			write_to_section("            <selected>0</selected>\n")
-			write_to_section("            <show>1</show>\n")
-			write_to_section("            <folderList>\n")
-			write_to_section("                <folder>\n")
-			write_to_section("                    <name>${_sectName}</name>\n")
-			write_to_section("                    <destination>\${_pluginInstallDir}</destination>\n")
-			write_to_section("                    <distributionFileList>\n")
-			write_to_section("                        <distributionFile>\n")
-			write_to_section("                            <origin>${_releasePath}/${_output_filename}</origin>\n")
-			write_to_section("                        </distributionFile>\n")
-			write_to_section("                    </distributionFileList>\n")
-			write_to_section("                </folder>\n")
-			write_to_section("            </folderList>\n")
-			write_to_section("        </component>\n")
+			add_custom_command(TARGET ${_target} POST_BUILD
+				COMMAND
+					${CMAKE_COMMAND} -P ${BD_CMAKE}/bd_installbuilder_section.cmake
+						"${SECTIONS_FILE}"          # CMAKE_ARGV3: Sections file path
+						"${_sectName}"              # CMAKE_ARGV4: Section name
+						"${_installDirVarName}"     # CMAKE_ARGV5: Install directory variable name
+						"$<TARGET_FILE:${_target}>" # CMAKE_ARGV6: Output file path
+			)
 		endif()
 	endif()
 endmacro()
