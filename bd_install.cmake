@@ -31,10 +31,14 @@ macro(install_release
 			add_custom_command(TARGET ${_target} POST_BUILD
 				COMMAND
 					${CMAKE_COMMAND} -P ${BD_CMAKE}/bd_installbuilder_section.cmake
-						"${SECTIONS_FILE}"          # CMAKE_ARGV3: Sections file path
-						"${_sectName}"              # CMAKE_ARGV4: Section name
-						"${_installDirVarName}"     # CMAKE_ARGV5: Install directory variable name
-						"$<TARGET_FILE:${_target}>" # CMAKE_ARGV6: Output file path
+						# CMAKE_ARGV3: Sections file path
+						"${SECTIONS_FILE}"
+						# CMAKE_ARGV4: Section name
+						"${_sectName}"
+						# CMAKE_ARGV5: Install directory variable name
+						"${_installDirVarName}"
+						# CMAKE_ARGV6: Output file path
+						"${_releasePath}/$<TARGET_FILE_NAME:${_target}>"
 			)
 		endif()
 	endif()
