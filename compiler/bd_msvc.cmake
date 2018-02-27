@@ -208,8 +208,6 @@ elseif(CMAKE_GENERATOR STREQUAL "Ninja")
 			"C:/Windows/System32"
 			"C:/Windows/System32/Wbem"
 			"C:/Windows/System32/WindowsPowerShell/v1.0"
-			"C:/Program Files (x86)/Git/bin"
-			"C:/SDKs/Python27"
 		)
 	endif()
 
