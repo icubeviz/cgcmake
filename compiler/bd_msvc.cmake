@@ -252,6 +252,9 @@ elseif(CMAKE_GENERATOR STREQUAL "Ninja")
 		"set INCLUDE=$ENV{INCLUDE}\n"
 		"\n"
 		"${ICUBE_GLOBALS}/bin/ninja.exe %*\n"
+		"if %ERRORLEVEL% NEQ 0 (\n"
+		"  exit /B %ERRORLEVEL%\n"
+		")\n"
 		"endlocal\n"
 	)
 endif()
