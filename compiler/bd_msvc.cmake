@@ -171,43 +171,36 @@ elseif(CMAKE_GENERATOR STREQUAL "Ninja")
 	elseif(MSVC_COMPILER STREQUAL "2017")
 		set(RDG_COMPILER_ID "14.0" CACHE STRING "" FORCE)
 
-		set(VC_EXE_PATH "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/bin/HostX64/x64")
+		set(VC_ROOT ${SDK_ROOT}/MSVC/2017)
+		set(VC_EXE_PATH ${VC_ROOT}/BuildTools/VC/Tools/MSVC/14.12.25827/bin/HostX64/x64)
 
 		set(COMPILER_INCLUDE
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/ATLMFC/include"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/include"
-			"C:/Program Files (x86)/Windows Kits/10/include/10.0.16299.0/ucrt"
-			"C:/Program Files (x86)/Windows Kits/10/include/10.0.16299.0/shared"
-			"C:/Program Files (x86)/Windows Kits/10/include/10.0.16299.0/um"
-			"C:/Program Files (x86)/Windows Kits/10/include/10.0.16299.0/winrt"
+			${VC_ROOT}/ATLMFC/include
+			${VC_ROOT}/include
+			${SDK_ROOT}/msvc/WindowsSDKs/v10/include/10.0.16299.0/ucrt
+			${SDK_ROOT}/msvc/WindowsSDKs/v10/include/10.0.16299.0/shared
+			${SDK_ROOT}/msvc/WindowsSDKs/v10/include/10.0.16299.0/um
+			${SDK_ROOT}/msvc/WindowsSDKs/v10/include/10.0.16299.0/winrt
 		)
 
 		set(COMPILER_LIBPATH
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/ATLMFC/lib/x64"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/lib/x64"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/lib/x86/store/references"
-			"C:/Program Files (x86)/Windows Kits/10/lib/10.0.16299.0/ucrt/x64"
-			"C:/Program Files (x86)/Windows Kits/10/lib/10.0.16299.0/um/x64"
-			"C:/Program Files (x86)/Windows Kits/10/References/10.0.16299.0"
-			"C:/Program Files (x86)/Windows Kits/10/UnionMetadata/10.0.16299.0"
-			"C:/Windows/Microsoft.NET/Framework64/v4.0.30319"
+			${VC_ROOT}/ATLMFC/lib/x64
+			${VC_ROOT}/lib/x64
+			${VC_ROOT}/lib/x86/store/references
+			${SDK_ROOT}/msvc/WindowsSDKs/v10/lib/10.0.16299.0/ucrt/x64
+			${SDK_ROOT}/msvc/WindowsSDKs/v10/lib/10.0.16299.0/um/x64
+			${SDK_ROOT}/msvc/WindowsSDKs/v10/References/10.0.16299.0
+			${SDK_ROOT}/msvc/WindowsSDKs/v10/UnionMetadata/10.0.16299.0
 		)
 
 		set(COMPILER_PATH
 			${VC_EXE_PATH}
-			"C:/Program Files (x86)/HTML Help Workshop"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/bin"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Common7/IDE"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Common7/Tools"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/bin/Roslyn"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/bin/HostX64/x64"
-			"C:/Program Files (x86)/Windows Kits/10/bin/10.0.16299.0/x64"
-			"C:/Program Files (x86)/Windows Kits/10/bin/x64"
-			"C:/Windows/Microsoft.NET/Framework64/v4.0.30319"
-			"C:/Windows"
-			"C:/Windows/System32"
-			"C:/Windows/System32/Wbem"
-			"C:/Windows/System32/WindowsPowerShell/v1.0"
+			${SDK_ROOT}/msvc/WindowsSDKs/v10/bin/10.0.16299.0/x64
+			${SDK_ROOT}/msvc/WindowsSDKs/v10/bin/x64
+			${VC_ROOT}/BuildTools/Common7/IDE
+			${VC_ROOT}/BuildTools/Common7/Tools
+			${VC_ROOT}/BuildTools/MSBuild/15.0/bin
+			${VC_ROOT}/BuildTools/MSBuild/15.0/bin/Roslyn
 		)
 	endif()
 
