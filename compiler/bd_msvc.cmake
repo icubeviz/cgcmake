@@ -195,15 +195,15 @@ elseif(CMAKE_GENERATOR STREQUAL "Ninja")
 
 		set(COMPILER_PATH
 			${VC_EXE_PATH}
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/bin/HostX64/x64"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/bin/Roslyn"
 			"C:/Program Files (x86)/HTML Help Workshop"
-			"C:/Program Files (x86)/Windows Kits/10/bin/x64"
-			"C:/Program Files (x86)/Windows Kits/10/bin/10.0.16299.0/x64"
-			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools//MSBuild/15.0/bin"
-			"C:/Windows/Microsoft.NET/Framework64/v4.0.30319"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/bin"
 			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Common7/IDE"
 			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/Common7/Tools"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/bin/Roslyn"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.12.25827/bin/HostX64/x64"
+			"C:/Program Files (x86)/Windows Kits/10/bin/10.0.16299.0/x64"
+			"C:/Program Files (x86)/Windows Kits/10/bin/x64"
+			"C:/Windows/Microsoft.NET/Framework64/v4.0.30319"
 			"C:/Windows"
 			"C:/Windows/System32"
 			"C:/Windows/System32/Wbem"
