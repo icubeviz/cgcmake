@@ -29,18 +29,33 @@ if(WIN32)
 	set(CMAKE_C_FLAGS         "${CMAKE_CXX_FLAGS}")
 
 else()
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+	set(WITH_CPP11 OFF)
+	if(MAYA_VERSION VERSION_GREATER_EQUAL 2018)
+		set(WITH_CPP11 ON)
+	endif()
+	if(VRAY_VERSION VERSION_GREATER_EQUAL 40)
+		set(WITH_CPP11 ON)
+	endif()
+
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -fvisibility=hidden")
 
 	# Time measurement.
 	# set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
+
+	if(WITH_CPP11)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	endif()
 
 	if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 		# Colored output.
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics")
 
 		# Disable some warnings for old SDK.
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++11-extensions -Wno-inconsistent-missing-override")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-inconsistent-missing-override")
+
+		if(NOT WITH_CPP11)
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++11-extensions")
+		endif()
 
 		option(USE_CLANG_THIN_LTO "Use Clang Think LTO" OFF)
 		if(USE_CLANG_THIN_LTO)
@@ -56,23 +71,12 @@ else()
 
 	if(APPLE)
 		if(WITH_LIBCPP)
-			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
 		else()
 			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++")
 		endif()
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${SDK_ROOT}/maya/include/OpenMayaMac.h")
 	else()
-		set(WITH_CPP11 OFF)
-		if(MAYA_VERSION EQUAL 2018 OR MAYA_VERSION GREATER 2018)
-			set(WITH_CPP11 ON)
-		endif()
-		if(VRAY_VERSION EQUAL 40 OR VRAY_VERSION GREATER 40)
-			set(WITH_CPP11 ON)
-		endif()
-		if(WITH_CPP11)
-			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-		endif()
-
 		if(WITH_STATIC_LIBC)
 			set(STATIC_LIBC "-static-libgcc -static-libstdc++")
 			set(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} ${STATIC_LIBC}")
