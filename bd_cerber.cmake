@@ -19,9 +19,9 @@ set(CERBER_INSTALL_BIN "${CERBER_INSTALL_ROOT}/bin")
 set(CERBER_INSTALL_LIB "${CERBER_INSTALL_ROOT}/lib")
 
 if(WIN32)
-	set(CERBER_PROTECT ${WITH_CERBER_ROOT}/cerber-libs/windows/release/x86/10.0/bin/cerberProtect.exe)
+	set(CERBER_PROTECT "${WITH_CERBER_ROOT}/cerber-libs/windows/debug/${ARCH}/${RDG_COMPILER_ID}/bin/cerberProtect.exe")
 else()
-	set(CERBER_PROTECT ${WITH_CERBER_DATA_ROOT}/bin/cerberProtect.bin)
+	set(CERBER_PROTECT "${WITH_CERBER_DATA_ROOT}/bin/cerberProtect.bin")
 endif()
 
 set(SIGNATURE ${WITH_CERBER_DATA_ROOT}/RDGroup.signature)
