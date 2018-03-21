@@ -18,6 +18,13 @@ function(message_array _label _array)
 	endforeach()
 endfunction()
 
+function(message_array_raw _label _array)
+	message(STATUS "${_label}:")
+	foreach(_item ${_array})
+		message(STATUS "  ${_item}")
+	endforeach()
+endfunction()
+
 macro(add_executable_ext _target _sources _headers)
 	if(UNIX)
 		add_executable(${_target} ${_sources} ${_headers})

@@ -169,7 +169,7 @@ elseif(CMAKE_GENERATOR STREQUAL "Ninja")
 			${SDK_ROOT}/msvc/WindowsSDKs/v7.0A/bin/x64
 		)
 	elseif(MSVC_COMPILER STREQUAL "2017")
-		set(RDG_COMPILER_ID "14.0" CACHE STRING "" FORCE)
+		set(RDG_COMPILER_ID "14.1" CACHE STRING "" FORCE)
 
 		set(VC_ROOT ${SDK_ROOT}/MSVC/2017)
 		set(VC_EXE_PATH ${VC_ROOT}/BuildTools/VC/Tools/MSVC/14.12.25827/bin/HostX64/x64)
@@ -221,7 +221,7 @@ elseif(CMAKE_GENERATOR STREQUAL "Ninja")
 			list(APPEND _env_list ${_native_path})
 		endforeach()
 		set(ENV{${env_var}} "${_env_list}")
-		message(STATUS "Setting ${env_var}: $ENV{${env_var}}")
+		message_array_raw("Setting ${env_var}" "$ENV{${env_var}}")
 	endmacro()
 
 	set_env_paths_native(PATH    "${COMPILER_PATH};${ORIG_PATH}")
