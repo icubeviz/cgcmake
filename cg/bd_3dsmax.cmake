@@ -140,7 +140,7 @@ file(TO_CMAKE_PATH "${3DSMAX_LIBPATH}" 3DSMAX_LIBPATH)
 # NOTE: This must be called before project().
 link_directories(${3DSMAX_LIBPATH})
 
-macro(link_with_3dsmax _target _suffix)
+function(link_with_3dsmax _target _suffix)
 	message_array("Using 3dsmax SDK include path" 3DSMAX_INCPATH)
 	message_array("Using 3dsmax SDK library path" 3DSMAX_LIBPATH)
 
@@ -152,4 +152,4 @@ macro(link_with_3dsmax _target _suffix)
 	target_compile_definitions(${_target} PRIVATE ${3DSMAX_DEFINITIONS})
 
 	target_link_libraries(${_target} ${3DSMAX_LIBS})
-endmacro()
+endfunction()
