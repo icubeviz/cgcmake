@@ -64,6 +64,18 @@ macro(install_release_3dsmax
 	)
 endmacro()
 
+function(install_release_3dsmax_custom_var _target _installerPathVariable)
+	set_release_paths()
+
+	set(RELEASE_PATH "${PRODUCT_INSTALL_ROOT}/${PROTECTION_SUBDIR}/${3DSMAX_VERSION}/${ARCH}")
+	file(MAKE_DIRECTORY ${RELEASE_PATH})
+
+	install_release(${_target}
+		${RELEASE_PATH}
+		"${_target}_3dsmax_\${3DSMAX_VERSION}_\${ARCH}"
+		"${_installerPathVariable}"
+	)
+endfunction()
 
 macro(install_release_3dsmax_vray_custom_var
 	_target
