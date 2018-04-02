@@ -101,7 +101,7 @@ macro(bd_init_vray_for_3dsmax)
 	if(VRAY_HAS_VASSERT)
 		list(APPEND VRAY_FOR_3DSMAX_DEFINITIONS
 			-DVRAY_HAS_VASSERT
-			$<$<CONFIG:Debug>:-DVASSERT_ENABLED>
+			$<$<CONFIG:Debug>:VASSERT_ENABLED>
 		)
 	endif()
 
