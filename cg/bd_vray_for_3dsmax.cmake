@@ -1,4 +1,5 @@
 include(CheckIncludeFileCXX)
+include(bd_vray_checks)
 
 if(3DSMAX_VERSION VERSION_EQUAL 2009)
 	set(VRAY_VC "vc81r")
@@ -111,6 +112,8 @@ macro(bd_init_vray_for_3dsmax)
 			-DVRAY_HAS_MESH_OBJECTS_INFO
 		)
 	endif()
+
+	bd_vray_detect_vray_version("${VRAY_FOR_3DSMAX_INCPATH}" "${VRAY_FOR_3DSMAX_LIBPATH}")
 
 	link_directories(${VRAY_FOR_3DSMAX_LIBPATH})
 endmacro()
