@@ -66,7 +66,6 @@ endif()
 
 set(VRAY_FOR_3DSMAX_DEFINITIONS
 	-DVRAY_EXPORTS
-	-DVRAY_VERSION=${VRAY_VERSION}
 )
 
 set(VRAY_FOR_3DSMAX_LIBS
@@ -114,6 +113,9 @@ macro(bd_init_vray_for_3dsmax)
 	endif()
 
 	bd_vray_detect_vray_version("${VRAY_FOR_3DSMAX_INCPATH}" "${VRAY_FOR_3DSMAX_LIBPATH}")
+	list(APPEND VRAY_FOR_3DSMAX_DEFINITIONS
+		-DVRAY_VERSION=${VRAY_VERSION}
+	)
 
 	link_directories(${VRAY_FOR_3DSMAX_LIBPATH})
 endmacro()
