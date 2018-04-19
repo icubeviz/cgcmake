@@ -171,8 +171,10 @@ macro(bd_init_vray_for_maya)
 
 	add_definitions(-DVRAY_EXPORTS -DVRAY_VERSION=${VRAY_VERSION})
 
-	if(NOT VRAY_COMPILER_HAS_SSE)
-		add_definitions(-DNO_SSE)
+	if(VRAY_VERSION VERSION_LESS 40)
+		if(NOT VRAY_COMPILER_HAS_SSE)
+			add_definitions(-DNO_SSE)
+		endif()
 	endif()
 endmacro()
 
