@@ -4,6 +4,9 @@ set(ARCH "x64" CACHE STRING "Target architecture")
 
 set(VRAY_VERSION "30" CACHE STRING "V-Ray version")
 
+set(WITH_APPIMAGE "" CACHE PATH "Path to linuxdeployqt")
+set(WITH_QT_ROOT "" CACHE PATH "Path to Qt root")
+
 option(WITH_INSTALLED_VRAY  "Use installed V-Ray SDK" OFF)
 
 option(WITH_CUSTOM_VRAY     "Use custom V-Ray SDK"    OFF)
