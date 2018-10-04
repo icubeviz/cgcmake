@@ -74,7 +74,7 @@ endmacro()
 
 macro(set_plugin_name _project)
 	target_compile_definitions(${_project} PRIVATE
-		-DPLUGIN_NAME=${_project}
+		-DPLUGIN_NAME="${_project}"
 	)
 endmacro()
 
@@ -101,4 +101,9 @@ function(bd_git_hash _dir _out_var)
 		OUTPUT_STRIP_TRAILING_WHITESPACE
 	)
 	set(${_out_var} "${_out}" PARENT_SCOPE)
+endfunction()
+
+function(file_glob_append _pattern _res)
+	file(GLOB _files "${_pattern}")
+	set(${_res} "${${_res}};${_files}" PARENT_SCOPE)
 endfunction()
