@@ -72,9 +72,9 @@ macro(vray_for_3dsmax_link_if_exist _libs)
 	link_if_exist("${VRAY_FOR_3DSMAX_LIBPATH}" "${_libs}")
 endmacro()
 
-macro(set_plugin_name _project)
+macro(set_plugin_name _project _name)
 	target_compile_definitions(${_project} PRIVATE
-		-DPLUGIN_NAME="${_project}"
+		-DPLUGIN_NAME="${_name}"
 	)
 endmacro()
 
