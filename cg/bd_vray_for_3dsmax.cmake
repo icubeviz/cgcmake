@@ -90,13 +90,6 @@ if(VRAY_VERSION LESS 40)
 endif()
 
 macro(bd_init_vray_for_3dsmax)
-	find_path(HAS_VALLOC_H valloc.h PATHS ${VRAY_FOR_3DSMAX_INCPATH})
-	if(HAS_VALLOC_H)
-		list(APPEND VRAY_FOR_3DSMAX_DEFINITIONS
-			-DVALLOC_IMPORTS
-		)
-	endif()
-
 	find_path(HAVE_PTRARRAY_HPP ptrarray.hpp PATHS ${VRAY_FOR_3DSMAX_INCPATH})
 	if(HAVE_PTRARRAY_HPP)
 		list(APPEND VRAY_FOR_3DSMAX_DEFINITIONS
