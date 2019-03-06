@@ -175,7 +175,10 @@ macro(bd_init_vray_for_maya)
 		if(NOT VRAY_COMPILER_HAS_SSE)
 			add_definitions(-DNO_SSE)
 		endif()
+	else()
+		add_definitions(-DWITH_DR2)
 	endif()
+
 endmacro()
 
 list(APPEND VRAY_FOR_MAYA_LIBS
