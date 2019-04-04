@@ -128,6 +128,45 @@ return 0;
 	VRAY_COMPILER_HAS_SSE
 )
 
+CHECK_CXX_SOURCE_COMPILES("
+#include <vrayplugins.h>
+
+using namespace VUtils;
+
+#ifndef EXT_EXTERNAL_MAP_CHANNELS
+struct VrsRayserverExternalMapChannels {};
+#else
+static Table<MapChannel> mapChannelsTable;
+struct VrsRayserverExternalMapChannels
+    : ExternalMapChannels
+{
+    PluginBase *getPlugin() VRAY_OVERRIDE { return NULL; }
+    PluginInterface *newInterface(InterfaceID id) VRAY_OVERRIDE { return NULL; }
+
+    Vector getValue(const VRayContext &rc, const StringID &channelName) const VRAY_OVERRIDE {
+        return Vector(0.0f);
+    }
+    Vector getValue(const VRayContext &rc, int channelIndex) const VRAY_OVERRIDE {
+        return Vector(0.0f);
+    }
+    const Table<MapChannel> & getChannels() const VRAY_OVERRIDE {
+        return mapChannelsTable;
+    }
+};
+#endif
+
+int main(int argc, char const *argv[]) {
+    // VrsRayserverExternalMapChannels mapChannels;
+    return 0;
+}
+"
+	VRAY_HAS_OLD_MAP_CHANNELS
+)
+
+if(NOT VRAY_HAS_OLD_MAP_CHANNELS)
+	add_definitions(-DVRAY_NEXT_MAP_CHANNELS)
+endif()
+
 string(REGEX MATCH "\\-cpp" VRAY_SDK_LIBCPP ${VRAY_FOR_MAYA_LIBPATH})
 if(VRAY_SDK_LIBCPP)
 	set(WITH_LIBCPP ON CACHE BOOL "" FORCE)
