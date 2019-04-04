@@ -57,6 +57,13 @@ list(REMOVE_DUPLICATES VRAY_FOR_MAYA_LIBPATH)
 list(APPEND VRAY_FOR_MAYA_INCPATH ${SDK_ROOT}/vray/include)
 list(REMOVE_DUPLICATES VRAY_FOR_MAYA_INCPATH)
 
+list(APPEND VRAY_FOR_MAYA_INCPATH
+	${SDK_ROOT}/qt/${OS}/maya/${MAYA_VERSION}/include
+)
+list(APPEND VRAY_FOR_MAYA_LIBPATH
+	${SDK_ROOT}/qt/${OS}/maya/${MAYA_VERSION}/lib
+)
+
 file(TO_CMAKE_PATH "${VRAY_FOR_MAYA_INCPATH}" VRAY_FOR_MAYA_INCPATH)
 file(TO_CMAKE_PATH "${VRAY_FOR_MAYA_LIBPATH}" VRAY_FOR_MAYA_LIBPATH)
 
@@ -138,26 +145,31 @@ struct VrsRayserverExternalMapChannels {};
 #else
 static Table<MapChannel> mapChannelsTable;
 struct VrsRayserverExternalMapChannels
-    : ExternalMapChannels
+	: ExternalMapChannels
 {
-    PluginBase *getPlugin() VRAY_OVERRIDE { return NULL; }
-    PluginInterface *newInterface(InterfaceID id) VRAY_OVERRIDE { return NULL; }
+	PluginBase *getPlugin() VRAY_OVERRIDE { return NULL; }
 
-    Vector getValue(const VRayContext &rc, const StringID &channelName) const VRAY_OVERRIDE {
-        return Vector(0.0f);
-    }
-    Vector getValue(const VRayContext &rc, int channelIndex) const VRAY_OVERRIDE {
-        return Vector(0.0f);
-    }
-    const Table<MapChannel> & getChannels() const VRAY_OVERRIDE {
-        return mapChannelsTable;
-    }
+	int getChannelIndex(const StringID &channelName) const VRAY_OVERRIDE {
+		return -1;
+	}
+
+	Vector getValue(const VRayContext &rc, const StringID &channelName) const VRAY_OVERRIDE {
+		return Vector(0.0f);
+	}
+
+	Vector getValue(const VRayContext &rc, int channelIndex) const VRAY_OVERRIDE {
+		return Vector(0.0f);
+	}
+
+	const Table<MapChannel> & getChannels() const VRAY_OVERRIDE {
+		return mapChannelsTable;
+	}
 };
 #endif
 
 int main(int argc, char const *argv[]) {
-    VrsRayserverExternalMapChannels mapChannels;
-    return 0;
+	VrsRayserverExternalMapChannels mapChannels;
+	return 0;
 }
 "
 	VRAY_HAS_OLD_MAP_CHANNELS
