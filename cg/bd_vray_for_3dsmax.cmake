@@ -43,6 +43,7 @@ else()
 	)
 
 	set(VRAY_FOR_3DSMAX_LIBPATH
+		${SDK_ROOT}/vray/3dsmax/${VRAY_VERSION}/${3DSMAX_VERSION}/lib
 		${SDK_ROOT}/vray/3dsmax/${VRAY_VERSION}/${3DSMAX_VERSION}/lib/${ARCH}
 		${SDK_ROOT}/vray/3dsmax/${VRAY_VERSION}/${3DSMAX_VERSION}/lib/${ARCH}/${VRAY_VC}
 	)
