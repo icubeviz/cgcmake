@@ -156,7 +156,7 @@ struct VrsRayserverExternalMapChannels
 #endif
 
 int main(int argc, char const *argv[]) {
-    // VrsRayserverExternalMapChannels mapChannels;
+    VrsRayserverExternalMapChannels mapChannels;
     return 0;
 }
 "
