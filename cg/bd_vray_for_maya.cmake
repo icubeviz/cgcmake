@@ -200,30 +200,31 @@ endif()
 
 macro(bd_add_define_if _var)
 	if(${_var})
-		add_definitions(-D${_var})
+		list(APPEND VRAY_FOR_MAYA_DEFS -D${_var})
 	endif()
 endmacro()
 
 macro(bd_init_vray_for_maya)
-	include_directories(${VRAY_FOR_MAYA_INCPATH})
-	message_array("Using V-Ray SDK include path" VRAY_FOR_MAYA_INCPATH)
+	message_sdk("V-Ray for Maya SDK" "${VRAY_FOR_MAYA_INCPATH}" "${VRAY_FOR_MAYA_LIBPATH}")
 
-	link_directories(${VRAY_FOR_MAYA_LIBPATH})
-	message_array("Using V-Ray SDK library path" VRAY_FOR_MAYA_LIBPATH)
+	set(VRAY_FOR_MAYA_DEFS
+		-DVRAY_EXPORTS
+		-DVRAY_VERSION=${VRAY_VERSION}
+	)
 
 	if(ICUBE_VRAY_HAS_GPU_MESH)
-		add_definitions(-DVRAY_GPU_MESH)
+		list(APPEND VRAY_FOR_MAYA_DEFS -DVRAY_GPU_MESH)
 	endif()
 
 	if(VRAY_HAS_VASSERT)
-		add_definitions(-DVRAY_HAS_VASSERT)
+		list(APPEND VRAY_FOR_MAYA_DEFS -DVRAY_HAS_VASSERT)
 		if (WIN32)
 			set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /DVASSERT_ENABLED")
 		endif()
 	endif()
 
 	if(HAVE_PTRARRAY_HPP)
-		add_definitions(-DVRAY_HAVE_PTRARRAY)
+		list(APPEND VRAY_FOR_MAYA_DEFS -DVRAY_HAVE_PTRARRAY)
 	endif()
 
 	bd_add_define_if(VRAY_HAS_MESH_OBJECTS_INFO)
@@ -234,16 +235,13 @@ macro(bd_init_vray_for_maya)
 
 	bd_vray_detect_vray_version("${VRAY_FOR_MAYA_INCPATH}" "${VRAY_FOR_MAYA_LIBPATH}")
 
-	add_definitions(-DVRAY_EXPORTS -DVRAY_VERSION=${VRAY_VERSION})
-
 	if(VRAY_VERSION VERSION_LESS 40)
 		if(NOT VRAY_COMPILER_HAS_SSE)
-			add_definitions(-DNO_SSE)
+			list(APPEND VRAY_FOR_MAYA_DEFS -DNO_SSE)
 		endif()
 	else()
-		add_definitions(-DWITH_DR2)
+		list(APPEND VRAY_FOR_MAYA_DEFS -DWITH_DR2)
 	endif()
-
 endmacro()
 
 list(APPEND VRAY_FOR_MAYA_LIBS
@@ -271,8 +269,15 @@ endif()
 
 macro(link_with_vray_for_maya _target)
 	if(APPLE)
-		set_target_properties(${_target} PROPERTIES PREFIX "lib")
-		set_target_properties(${_target} PROPERTIES SUFFIX ".so")
+		set_target_properties(${_target}
+			PROPERTIES
+				PREFIX "lib"
+				SUFFIX ".so"
+		)
 	endif()
-	target_link_libraries(${_target} ${VRAY_FOR_MAYA_LIBS})
+
+	target_compile_definitions(${_target} PRIVATE ${VRAY_FOR_MAYA_DEFS})
+	target_include_directories(${_target} PRIVATE ${VRAY_FOR_MAYA_INCPATH})
+	target_link_directories(${_target}    PRIVATE ${VRAY_FOR_MAYA_LIBPATH})
+	target_link_libraries(${_target}      PRIVATE ${VRAY_FOR_MAYA_LIBS})
 endmacro()

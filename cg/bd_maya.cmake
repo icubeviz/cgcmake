@@ -55,34 +55,33 @@ if(APPLE)
 	)
 endif()
 
-if(${OS} MATCHES "osx")
-	set(MAYA_DSO_EXT ".bundle")
-elseif(${OS} MATCHES "windows")
-	set(MAYA_DSO_EXT ".mll")
-else()
-	set(MAYA_DSO_EXT ".so")
-endif()
-
 macro(bd_init_maya)
-	link_directories(${MAYA_LIBPATH})
-
-	message_array("Found Maya SDK include path" MAYA_INCPATH)
-	message_array("Found Maya SDK library path" MAYA_LIBPATH)
+	message_sdk("Maya SDK" "${MAYA_INCPATH}" "${MAYA_LIBPATH}")
 endmacro()
 
-macro(bd_maya_setup _target)
+function(bd_maya_setup _target)
+	set_target_properties(${_target}
+		PROPERTIES
+			PREFIX ""
+	)
+
 	target_compile_definitions(${_target} PRIVATE ${MAYA_DEFINITIONS})
 	target_include_directories(${_target} PRIVATE ${MAYA_INCPATH})
-endmacro()
+	target_link_directories(${_target}    PRIVATE ${MAYA_LIBPATH})
+	target_link_libraries(${_target}      PRIVATE ${MAYA_LIBS})
+endfunction()
 
-macro(link_with_maya _target)
-	bd_maya_setup(${_target})
+function(bd_maya_ext _target)
+	if(${OS} MATCHES "osx")
+		set(MAYA_DSO_EXT ".bundle")
+	elseif(${OS} MATCHES "windows")
+		set(MAYA_DSO_EXT ".mll")
+	else()
+		set(MAYA_DSO_EXT ".so")
+	endif()
 
-	set_target_properties(${_target} PROPERTIES PREFIX "")
-	set_target_properties(${_target} PROPERTIES SUFFIX ${MAYA_DSO_EXT})
-
-	target_link_libraries(${_target} ${MAYA_LIBS})
-endmacro()
-
-macro(setup_maya_dso_props _target)
-endmacro()
+	set_target_properties(${_target}
+		PROPERTIES
+			SUFFIX ${MAYA_DSO_EXT}
+	)
+endfunction()

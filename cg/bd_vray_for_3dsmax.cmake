@@ -126,22 +126,11 @@ macro(bd_init_vray_for_3dsmax)
 	list(APPEND VRAY_FOR_3DSMAX_DEFINITIONS
 		-DVRAY_VERSION=${VRAY_VERSION}
 	)
-
-	link_directories(${VRAY_FOR_3DSMAX_LIBPATH})
 endmacro()
 
 function(bd_vray_for_3dsmax_setup_target _target)
-	target_include_directories(${_target}
-		PRIVATE
-			${VRAY_FOR_3DSMAX_INCPATH}
-	)
-
-	target_compile_definitions(${_target}
-		PRIVATE
-			${VRAY_FOR_3DSMAX_DEFINITIONS}
-	)
-
-	target_link_libraries(${_target}
-		${VRAY_FOR_3DSMAX_LIBS}
-	)
+	target_compile_definitions(${_target} PRIVATE ${VRAY_FOR_3DSMAX_DEFINITIONS})
+	target_include_directories(${_target} PRIVATE ${VRAY_FOR_3DSMAX_INCPATH})
+	target_link_directories(${_target}    PRIVATE ${VRAY_FOR_3DSMAX_LIBPATH})
+	target_link_libraries(${_target}      PRIVATE ${VRAY_FOR_3DSMAX_LIBS})
 endfunction()

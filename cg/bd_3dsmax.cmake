@@ -140,9 +140,6 @@ file(TO_CMAKE_PATH "${MENTALRAY_MI_PATH}" MENTALRAY_MI_PATH)
 file(TO_CMAKE_PATH "${3DSMAX_INCPATH}" 3DSMAX_INCPATH)
 file(TO_CMAKE_PATH "${3DSMAX_LIBPATH}" 3DSMAX_LIBPATH)
 
-# NOTE: This must be called before project().
-link_directories(${3DSMAX_LIBPATH})
-
 function(link_with_3dsmax _target _suffix)
 	message_array("Using 3dsmax SDK include path" 3DSMAX_INCPATH)
 	message_array("Using 3dsmax SDK library path" 3DSMAX_LIBPATH)
@@ -151,8 +148,8 @@ function(link_with_3dsmax _target _suffix)
 
 	set_target_properties(${_target} PROPERTIES SUFFIX ${_suffix})
 
-	target_include_directories(${_target} PRIVATE ${3DSMAX_INCPATH})
 	target_compile_definitions(${_target} PRIVATE ${3DSMAX_DEFINITIONS})
-
-	target_link_libraries(${_target} ${3DSMAX_LIBS})
+	target_include_directories(${_target} PRIVATE ${3DSMAX_INCPATH})
+	target_link_directories(${_target}    PRIVATE ${3DSMAX_LIBPATH})
+	target_link_libraries(${_target}      PRIVATE ${3DSMAX_LIBS})
 endfunction()

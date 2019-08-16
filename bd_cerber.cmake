@@ -77,7 +77,7 @@ function(link_with_cerber _target)
 
 	target_include_directories(${_target} PRIVATE ${CERBER_INCLUDE_PATHS})
 	target_compile_definitions(${_target} PRIVATE ${CERBER_DEFINITIONS})
-	target_link_libraries(${_target} ${CERBER_LIBS})
+	target_link_libraries(${_target} PRIVATE ${CERBER_LIBS})
 endfunction()
 
 

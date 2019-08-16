@@ -22,5 +22,8 @@ set(WINDOWS_LINK_FLAGS
 )
 
 macro(link_with_windows _target)
-	target_link_libraries(${_target} ${WINDOWS_LINK_FLAGS})
+	target_link_libraries(${_target}
+		PRIVATE
+			${WINDOWS_LINK_FLAGS}
+	)
 endmacro()

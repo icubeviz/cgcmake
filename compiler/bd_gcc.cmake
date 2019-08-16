@@ -7,7 +7,7 @@ set(LINUX_LINK_FLAGS
 set(CMAKE_INSTALL_SO_NO_EXE OFF)
 
 macro(link_with_linux _target)
-	target_link_libraries(${_target} ${LINUX_LINK_FLAGS})
+	target_link_libraries(${_target} PRIVATE ${LINUX_LINK_FLAGS})
 endmacro()
 
 
@@ -19,5 +19,5 @@ set(OSX_LINK_FLAGS
 )
 
 macro(link_with_osx _target)
-	target_link_libraries(${_target} ${OSX_LINK_FLAGS})
+	target_link_libraries(${_target} PRIVATE ${OSX_LINK_FLAGS})
 endmacro()
