@@ -25,7 +25,14 @@ else()
 	set(VRAY_FOR_MAYA_INCPATH        "${SDK_ROOT}/vray/maya/${VRAY_VERSION}/${OS}/${MAYA_VERSION}/include")
 	set(VRAY_FOR_MAYA_SEARCH_LIBPATH "${SDK_ROOT}/vray/maya/${VRAY_VERSION}/${OS}/${MAYA_VERSION}/lib")
 	if(WIN32)
+<<<<<<< Updated upstream
 		set(VRAY_FOR_MAYA_SEARCH_LIBPATH "${VRAY_FOR_MAYA_SEARCH_LIBPATH}")
+=======
+		set(VRAY_FOR_MAYA_SEARCH_LIBPATH
+			${VRAY_FOR_MAYA_SEARCH_LIBPATH}
+			${VRAY_FOR_MAYA_SEARCH_LIBPATH}/${ARCH}
+		)
+>>>>>>> Stashed changes
 	endif()
 endif()
 
@@ -67,113 +74,124 @@ list(APPEND VRAY_FOR_MAYA_LIBPATH
 file(TO_CMAKE_PATH "${VRAY_FOR_MAYA_INCPATH}" VRAY_FOR_MAYA_INCPATH)
 file(TO_CMAKE_PATH "${VRAY_FOR_MAYA_LIBPATH}" VRAY_FOR_MAYA_LIBPATH)
 
-find_path(HAVE_PTRARRAY_HPP ptrarray.hpp PATHS ${VRAY_FOR_MAYA_INCPATH})
+if(VRAY_VERSION VERSION_GREATER_EQUAL 40)
+	set(VRAY_HAS_MESH_OBJECTS_INFO            ON)
+	set(VRAY_HAS_EXT_VRAYSCENE_OVERRIDE_INFO  ON)
+	set(VRAY_HAS_EXT_VRAYSCENE_GENERATOR_INFO ON)
+	set(VRAY_HAS_EXT_VRAYSCENE_SOURCE         ON)
+	set(VRAY_HAS_EXT_VRAYSCENE_MANAGER        ON)
 
-CHECK_INCLUDE_FILE_CXX(vassert.h VRAY_HAS_VASSERT)
-CHECK_INCLUDE_FILE_CXX(mesh_objects_info.h VRAY_HAS_MESH_OBJECTS_INFO)
+	set(VRAY_HAS_VASSERT  ON)
+	set(HAVE_PTRARRAY_HPP OFF)
+else()
+	find_path(HAVE_PTRARRAY_HPP ptrarray.hpp PATHS ${VRAY_FOR_MAYA_INCPATH})
 
-CHECK_CXX_SOURCE_COMPILES("
-#include <vrayplugins.h>
+	CHECK_INCLUDE_FILE_CXX(vassert.h VRAY_HAS_VASSERT)
+	CHECK_INCLUDE_FILE_CXX(mesh_objects_info.h VRAY_HAS_MESH_OBJECTS_INFO)
 
-using namespace VUtils;
+	CHECK_CXX_SOURCE_COMPILES("
+	#include <vrayplugins.h>
 
-int main(int argc, char const *argv[]) {
-InterfaceID ifaceId = EXT_VRAYSCENE_SOURCE;
-return 0;
-}
-"
-	VRAY_HAS_EXT_VRAYSCENE_SOURCE
-)
+	using namespace VUtils;
 
-CHECK_CXX_SOURCE_COMPILES("
-#include <vrayplugins.h>
-
-using namespace VUtils;
-
-int main(int argc, char const *argv[]) {
-InterfaceID ifaceId = EXT_VRAYSCENE_GENERATOR_INFO;
-return 0;
-}
-"
-	VRAY_HAS_EXT_VRAYSCENE_GENERATOR_INFO
-)
-
-CHECK_CXX_SOURCE_COMPILES("
-#include <vrayplugins.h>
-
-using namespace VUtils;
-
-int main(int argc, char const *argv[]) {
-InterfaceID ifaceId = EXT_VRAYSCENE_OVERRIDE_INFO;
-return 0;
-}
-"
-	VRAY_HAS_EXT_VRAYSCENE_OVERRIDE_INFO
-)
-
-CHECK_CXX_SOURCE_COMPILES("
-#include <vraypluginrenderer_interfaces.h>
-
-using namespace VUtils;
-
-int main(int argc, char const *argv[]) {
-InterfaceID ifaceId = EXT_VRAYSCENE_MANAGER;
-return 0;
-}
-"
-	VRAY_HAS_EXT_VRAYSCENE_MANAGER
-)
-
-CHECK_CXX_SOURCE_COMPILES("
-#include <utils.h>
-#include <ssetypes.h>
-
-int main(int argc, char const *argv[]) {
-return 0;
-}
-"
-	VRAY_COMPILER_HAS_SSE
-)
-
-CHECK_CXX_SOURCE_COMPILES("
-#include <vrayplugins.h>
-
-using namespace VUtils;
-
-#ifndef EXT_EXTERNAL_MAP_CHANNELS
-struct VrsRayserverExternalMapChannels {};
-#else
-static Table<MapChannel> mapChannelsTable;
-struct VrsRayserverExternalMapChannels
-	: ExternalMapChannels
-{
-	PluginBase *getPlugin() VRAY_OVERRIDE { return NULL; }
-
-	int getChannelIndex(const StringID &channelName) const VRAY_OVERRIDE {
-		return -1;
-	}
-
-	Vector getValue(const VRayContext &rc, const StringID &channelName) const VRAY_OVERRIDE {
-		return Vector(0.0f);
-	}
-
-	Vector getValue(const VRayContext &rc, int channelIndex) const VRAY_OVERRIDE {
-		return Vector(0.0f);
-	}
-
-	const Table<MapChannel> & getChannels() const VRAY_OVERRIDE {
-		return mapChannelsTable;
-	}
-};
-#endif
-
-int main(int argc, char const *argv[]) {
-	VrsRayserverExternalMapChannels mapChannels;
+	int main(int argc, char const *argv[]) {
+	InterfaceID ifaceId = EXT_VRAYSCENE_SOURCE;
 	return 0;
-}
-"
-	VRAY_HAS_OLD_MAP_CHANNELS
-)
+	}
+	"
+		VRAY_HAS_EXT_VRAYSCENE_SOURCE
+	)
+
+	CHECK_CXX_SOURCE_COMPILES("
+	#include <vrayplugins.h>
+
+	using namespace VUtils;
+
+	int main(int argc, char const *argv[]) {
+	InterfaceID ifaceId = EXT_VRAYSCENE_GENERATOR_INFO;
+	return 0;
+	}
+	"
+		VRAY_HAS_EXT_VRAYSCENE_GENERATOR_INFO
+	)
+
+	CHECK_CXX_SOURCE_COMPILES("
+	#include <vrayplugins.h>
+
+	using namespace VUtils;
+
+	int main(int argc, char const *argv[]) {
+	InterfaceID ifaceId = EXT_VRAYSCENE_OVERRIDE_INFO;
+	return 0;
+	}
+	"
+		VRAY_HAS_EXT_VRAYSCENE_OVERRIDE_INFO
+	)
+
+	CHECK_CXX_SOURCE_COMPILES("
+	#include <vraypluginrenderer_interfaces.h>
+
+	using namespace VUtils;
+
+	int main(int argc, char const *argv[]) {
+	InterfaceID ifaceId = EXT_VRAYSCENE_MANAGER;
+	return 0;
+	}
+	"
+		VRAY_HAS_EXT_VRAYSCENE_MANAGER
+	)
+
+	CHECK_CXX_SOURCE_COMPILES("
+	#include <utils.h>
+	#include <ssetypes.h>
+
+	int main(int argc, char const *argv[]) {
+	return 0;
+	}
+	"
+		VRAY_COMPILER_HAS_SSE
+	)
+
+	CHECK_CXX_SOURCE_COMPILES("
+	#include <vrayplugins.h>
+
+	using namespace VUtils;
+
+	#ifndef EXT_EXTERNAL_MAP_CHANNELS
+	struct VrsRayserverExternalMapChannels {};
+	#else
+	static Table<MapChannel> mapChannelsTable;
+	struct VrsRayserverExternalMapChannels
+		: ExternalMapChannels
+	{
+		PluginBase *getPlugin() VRAY_OVERRIDE { return NULL; }
+
+		int getChannelIndex(const StringID &channelName) const VRAY_OVERRIDE {
+			return -1;
+		}
+
+		Vector getValue(const VRayContext &rc, const StringID &channelName) const VRAY_OVERRIDE {
+			return Vector(0.0f);
+		}
+
+		Vector getValue(const VRayContext &rc, int channelIndex) const VRAY_OVERRIDE {
+			return Vector(0.0f);
+		}
+
+		const Table<MapChannel> & getChannels() const VRAY_OVERRIDE {
+			return mapChannelsTable;
+		}
+	};
+	#endif
+
+	int main(int argc, char const *argv[]) {
+		VrsRayserverExternalMapChannels mapChannels;
+		return 0;
+	}
+	"
+		VRAY_HAS_OLD_MAP_CHANNELS
+	)
+endif()
 
 if(NOT VRAY_HAS_OLD_MAP_CHANNELS)
 	add_definitions(-DVRAY_NEXT_MAP_CHANNELS)

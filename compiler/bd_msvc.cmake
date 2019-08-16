@@ -3,6 +3,8 @@ set(RDG_COMPILER_ID "9.0" CACHE STRING "Visual Studio compiler ID")
 option(RDG_COMPILER_FROM_ENV "Use Visual Studio compiler from environment" OFF)
 option(RDG_USE_CLANG "Use Clang compiler" OFF)
 
+option(LOCAL_COMPILER "Use locally installed compiler" OFF)
+
 if(RDG_USE_CLANG)
 	# Smth...
 	set(CMAKE_C_LINK_EXECUTABLE "clang" CACHE INTERNAL "")
@@ -19,7 +21,54 @@ elseif(CMAKE_GENERATOR STREQUAL "Ninja")
 		set(_WIN64 "/win64/amd64")
 	endif()
 
-	if(MSVC_COMPILER STREQUAL "2005")
+	if(LOCAL_COMPILER)
+		set(RDG_COMPILER_ID "14.1" CACHE STRING "" FORCE)
+		set(VC_EXE_PATH "C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/VC/Tools/MSVC/14.16.27023/bin/HostX64/x64")
+
+		set(COMPILER_INCLUDE
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/VC/Tools/MSVC/14.16.27023/ATLMFC/include"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/VC/Tools/MSVC/14.16.27023/include"
+			"C:/Program Files (x86)/Windows Kits/NETFXSDK/4.6.1/include/um"
+			"C:/Program Files (x86)/Windows Kits/10/include/10.0.18362.0/ucrt"
+			"C:/Program Files (x86)/Windows Kits/10/include/10.0.18362.0/shared"
+			"C:/Program Files (x86)/Windows Kits/10/include/10.0.18362.0/um"
+			"C:/Program Files (x86)/Windows Kits/10/include/10.0.18362.0/winrt"
+			"C:/Program Files (x86)/Windows Kits/10/include/10.0.18362.0/cppwinrt"
+		)
+
+		set(COMPILER_LIBPATH
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/VC/Tools/MSVC/14.16.27023/ATLMFC/lib/x64"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/VC/Tools/MSVC/14.16.27023/lib/x64"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/VC/Tools/MSVC/14.16.27023/lib/x86/store/references"
+			"C:/Program Files (x86)/Windows Kits/10/lib/10.0.18362.0/ucrt/x64"
+			"C:/Program Files (x86)/Windows Kits/10/lib/10.0.18362.0/um/x64"
+			"C:/Program Files (x86)/Windows Kits/10/References/10.0.18362.0"
+			"C:/Program Files (x86)/Windows Kits/10/UnionMetadata/10.0.18362.0"
+			"C:/Program Files (x86)/Windows Kits/NETFXSDK/4.6.1/lib/um/x64"
+			"C:/WINDOWS/Microsoft.NET/Framework64/v4.0.30319"
+		)
+
+		set(COMPILER_PATH
+			${VC_EXE_PATH}
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/IDE/VC/VCPackages"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/IDE/CommonExtensions/Microsoft/TestWindow"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/IDE/CommonExtensions/Microsoft/TeamFoundation/Team Explorer"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/MSBuild/15.0/bin/Roslyn"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Team Tools/Performance Tools/x64"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Team Tools/Performance Tools"
+			"C:/Program Files (x86)/Microsoft Visual Studio/Shared/Common/VSPerfCollectionTools//x64"
+			"C:/Program Files (x86)/Microsoft Visual Studio/Shared/Common/VSPerfCollectionTools/"
+			"C:/Program Files (x86)/Microsoft SDKs/Windows/v10.0A/bin/NETFX 4.6.1 Tools/x64/"
+			"C:/Program Files (x86)/HTML Help Workshop"
+			"C:/Program Files (x86)/Windows Kits/10/bin/10.0.18362.0/x64"
+			"C:/Program Files (x86)/Windows Kits/10/bin/x64"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional//MSBuild/15.0/bin"
+			"C:/WINDOWS/Microsoft.NET/Framework64/v4.0.30319"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/IDE/"
+			"C:/Program Files (x86)/Microsoft Visual Studio/2017/Professional/Common7/Tools/"
+		)
+
+	elseif(MSVC_COMPILER STREQUAL "2005")
 		set(RDG_COMPILER_ID "8.0" CACHE STRING "" FORCE)
 
 		set(VC_ROOT     ${SDK_ROOT}/MSVC/2005)
@@ -221,7 +270,9 @@ elseif(CMAKE_GENERATOR STREQUAL "Ninja")
 			list(APPEND _env_list ${_native_path})
 		endforeach()
 		set(ENV{${env_var}} "${_env_list}")
-		message_array_raw("Setting ${env_var}" "$ENV{${env_var}}")
+		if(NOT LOCAL_COMPILER)
+			message_array_raw("Setting ${env_var}" "$ENV{${env_var}}")
+		endif()
 	endmacro()
 
 	set_env_paths_native(PATH    "${COMPILER_PATH};${ORIG_PATH}")

@@ -4,8 +4,8 @@ function(bd_arnold_for_maya_setup)
 	endif()
 
 	set(ARNOLD_FOR_MAYA_LIBPATH
-		${SDK_ROOT}/arnold/lib
-		${SDK_ROOT}/arnold/maya/${MAYA_VERSION}/lib
+		${SDK_ROOT}/arnold/lib/${OS}
+		${SDK_ROOT}/arnold/maya/${MAYA_VERSION}/lib/${OS}
 	)
 
 	link_directories(${ARNOLD_FOR_MAYA_LIBPATH})
@@ -21,10 +21,6 @@ function(bd_arnold_for_maya_setup_target _target)
 		${SDK_ROOT}/arnold/include
 	)
 
-	set(ARNOLD_FOR_MAYA_DEFINITIONS
-		-DWITH_ARNOLD
-	)
-
 	set(ARNOLD_FOR_MAYA_LIBS
 		ai.lib
 		mtoa_api.lib
@@ -37,10 +33,5 @@ function(bd_arnold_for_maya_setup_target _target)
 
 	target_link_libraries(${_target}
 		${ARNOLD_FOR_MAYA_LIBS}
-	)
-
-	target_compile_definitions(${_target}
-		PRIVATE
-			${ARNOLD_FOR_MAYA_DEFINITIONS}
 	)
 endfunction()

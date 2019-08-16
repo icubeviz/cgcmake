@@ -40,5 +40,5 @@ macro(print_info)
 	endif()
 
 	message(STATUS "Install:")
-	message(STATUS "  Sections filepath: ${SECTIONS_FILE}")
+	message(STATUS "  Sections: ${SECTIONS_FILE}")
 endmacro()
