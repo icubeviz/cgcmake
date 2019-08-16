@@ -25,14 +25,10 @@ else()
 	set(VRAY_FOR_MAYA_INCPATH        "${SDK_ROOT}/vray/maya/${VRAY_VERSION}/${OS}/${MAYA_VERSION}/include")
 	set(VRAY_FOR_MAYA_SEARCH_LIBPATH "${SDK_ROOT}/vray/maya/${VRAY_VERSION}/${OS}/${MAYA_VERSION}/lib")
 	if(WIN32)
-<<<<<<< Updated upstream
-		set(VRAY_FOR_MAYA_SEARCH_LIBPATH "${VRAY_FOR_MAYA_SEARCH_LIBPATH}")
-=======
 		set(VRAY_FOR_MAYA_SEARCH_LIBPATH
 			${VRAY_FOR_MAYA_SEARCH_LIBPATH}
 			${VRAY_FOR_MAYA_SEARCH_LIBPATH}/${ARCH}
 		)
->>>>>>> Stashed changes
 	endif()
 endif()
 
