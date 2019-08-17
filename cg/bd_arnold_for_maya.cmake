@@ -4,13 +4,13 @@ function(bd_arnold_maya_setup _target)
 	endif()
 
 	set(ARNOLD_FOR_MAYA_LIBPATH
-		${SDK_ROOT}/arnold/lib/${OS}
-		${SDK_ROOT}/arnold/maya/${MAYA_VERSION}/lib/${OS}
+		${SDK_ROOT}/arnold/${ARNOLD_VERSION}/core/lib/${OS}
+		${SDK_ROOT}/arnold/${ARNOLD_VERSION}/maya/${MAYA_VERSION}/lib/${OS}
 	)
 
 	set(ARNOLD_FOR_MAYA_INCPATH
-		${SDK_ROOT}/arnold/maya/${MAYA_VERSION}/include
-		${SDK_ROOT}/arnold/include
+		${SDK_ROOT}/arnold/${ARNOLD_VERSION}/core/include
+		${SDK_ROOT}/arnold/${ARNOLD_VERSION}/maya/${MAYA_VERSION}/include
 	)
 
 	set(ARNOLD_FOR_MAYA_LIBS

@@ -3,7 +3,8 @@ set(MSVC_COMPILER "2008" CACHE STRING "Visual Studio compiler selection")
 set(ARCH "x64" CACHE STRING "Target architecture")
 
 set(VRAY_VERSION "30" CACHE STRING "V-Ray version")
-set(REDSHIFT_VERSION "2.6.39" CACHE STRING "Redshift SDK version")
+set(REDSHIFT_VERSION "2.6.44" CACHE STRING "Redshift SDK version")
+set(ARNOLD_VERSION "5.4.0.0" CACHE STRING "Arnold SDK version")
 
 set(WITH_APPIMAGE "" CACHE PATH "Path to linuxdeployqt")
 set(WITH_QT_ROOT "" CACHE PATH "Path to Qt root")
