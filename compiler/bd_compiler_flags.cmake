@@ -1,4 +1,4 @@
-add_definitions(-DNDEBUG -DNOMINMAX)
+add_definitions(-DNDEBUG)
 
 if(WIN32)
 	include_directories(${COMPILER_INCLUDE})
