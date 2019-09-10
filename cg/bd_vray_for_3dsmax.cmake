@@ -126,9 +126,28 @@ macro(bd_init_vray_for_3dsmax)
 	list(APPEND VRAY_FOR_3DSMAX_DEFINITIONS
 		-DVRAY_VERSION=${VRAY_VERSION}
 	)
+
+	find_path(VALLOC_CPP newdeleteoverload.cpp
+		PATHS
+			${VRAY_FOR_3DSMAX_INCPATH}
+		PATH_SUFFIXES
+			valloc_impl
+		NO_DEFAULT_PAT
+	)
 endmacro()
 
 function(bd_vray_for_3dsmax_setup_target _target)
+	if(VALLOC_CPP)
+		set(VALLOC_FILES
+			${VALLOC_CPP}/newdeleteoverload.cpp
+			${VALLOC_CPP}/vallocstub.cpp
+		)
+
+		target_sources(${_target} PRIVATE ${VALLOC_FILES})
+
+		source_group("V-Ray SDK" FILES ${VALLOC_FILES})
+	endif()
+
 	target_compile_definitions(${_target} PRIVATE ${VRAY_FOR_3DSMAX_DEFINITIONS})
 	target_include_directories(${_target} PRIVATE ${VRAY_FOR_3DSMAX_INCPATH})
 	target_link_directories(${_target}    PRIVATE ${VRAY_FOR_3DSMAX_LIBPATH})
