@@ -248,6 +248,14 @@ macro(bd_init_vray_for_maya)
 	else()
 		list(APPEND VRAY_FOR_MAYA_DEFS -DWITH_DR2)
 	endif()
+
+	find_path(VALLOC_CPP newdeleteoverload.cpp
+		PATHS
+			${VRAY_FOR_MAYA_INCPATH}
+		PATH_SUFFIXES
+			valloc_impl
+		NO_DEFAULT_PAT
+	)
 endmacro()
 
 list(APPEND VRAY_FOR_MAYA_LIBS
@@ -273,7 +281,7 @@ else()
 	)
 endif()
 
-macro(link_with_vray_for_maya _target)
+function(link_with_vray_for_maya _target)
 	if(APPLE)
 		set_target_properties(${_target}
 			PROPERTIES
@@ -282,8 +290,19 @@ macro(link_with_vray_for_maya _target)
 		)
 	endif()
 
+	if(VALLOC_CPP)
+		set(VALLOC_FILES
+			${VALLOC_CPP}/newdeleteoverload.cpp
+			${VALLOC_CPP}/vallocstub.cpp
+		)
+
+		target_sources(${_target} PRIVATE ${VALLOC_FILES})
+
+		source_group("V-Ray SDK" FILES ${VALLOC_FILES})
+	endif()
+
 	target_compile_definitions(${_target} PRIVATE ${VRAY_FOR_MAYA_DEFS})
 	target_include_directories(${_target} PRIVATE ${VRAY_FOR_MAYA_INCPATH})
 	target_link_directories(${_target}    PRIVATE ${VRAY_FOR_MAYA_LIBPATH})
 	target_link_libraries(${_target}      PRIVATE ${VRAY_FOR_MAYA_LIBS})
-endmacro()
+endfunction()
