@@ -111,7 +111,7 @@ macro(bd_init_vray_for_3dsmax)
 	if(VRAY_HAS_VASSERT)
 		list(APPEND VRAY_FOR_3DSMAX_DEFINITIONS
 			-DVRAY_HAS_VASSERT
-			$<$<CONFIG:Debug>:VASSERT_ENABLED>
+			# $<$<CONFIG:Debug>:VASSERT_ENABLED>
 		)
 	endif()
 
@@ -149,7 +149,11 @@ function(bd_vray_for_3dsmax_setup_target _target)
 	endif()
 
 	target_compile_definitions(${_target} PRIVATE ${VRAY_FOR_3DSMAX_DEFINITIONS})
-	target_include_directories(${_target} PRIVATE ${VRAY_FOR_3DSMAX_INCPATH})
+	target_include_directories(${_target}
+		PRIVATE
+			${VRAY_FOR_3DSMAX_INCPATH}
+			${VRAY_FOR_3DSMAX_INCPATH}/maxutils # Introduced in 4.2
+	)
 	target_link_directories(${_target}    PRIVATE ${VRAY_FOR_3DSMAX_LIBPATH})
 	target_link_libraries(${_target}      PRIVATE ${VRAY_FOR_3DSMAX_LIBS})
 endfunction()
