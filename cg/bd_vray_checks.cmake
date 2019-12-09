@@ -21,9 +21,16 @@ function(bd_vray_detect_vray_version _vray_inc_paths _vray_lib_paths)
                 file(STRINGS ${VRAYBASE_H} VRAY_VERSION_MINOR REGEX "^#define[\t ]+VRAY_DLL_VERSION_MINOR[\t ]+.*")
                 string(REGEX REPLACE "^.*VRAY_DLL_VERSION_MINOR[\t ]+([0-9]*).*$" "\\1" VRAY_VERSION_MINOR "${VRAY_VERSION_MINOR}")
 
-                message(STATUS "Found V-Ray SDK: ${VRAY_VERSION_MAJOR}.${VRAY_VERSION_MINOR}")
+                string(LENGTH "${VRAY_VERSION_MINOR}" VRAY_VERSION_MINOR_LEN)
+                if (${VRAY_VERSION_MINOR_LEN} GREATER 1)
+                    math(EXPR VRAY_VERSION_MIN "${VRAY_VERSION_MINOR} / 10")
+                else()
+                    set(VRAY_VERSION_MIN ${VRAY_VERSION_MINOR})
+                endif()
 
-                set(VRAY_VERSION "${VRAY_VERSION_MAJOR}${VRAY_VERSION_MINOR}" CACHE STRING "" FORCE)
+                set(VRAY_VERSION "${VRAY_VERSION_MAJOR}${VRAY_VERSION_MIN}" CACHE STRING "" FORCE)
+
+                message(STATUS "Found V-Ray SDK: ${VRAY_VERSION_MAJOR}.${VRAY_VERSION_MINOR} [${VRAY_VERSION}]")
             else()
                 string(SUBSTRING "${VRAY_DLL_VERSION}" 2 1 VRAY_VERSION_MAJOR)
                 string(SUBSTRING "${VRAY_DLL_VERSION}" 3 1 VRAY_VERSION_MINOR)
