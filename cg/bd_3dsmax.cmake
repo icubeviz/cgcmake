@@ -144,7 +144,8 @@ function(link_with_3dsmax _target _suffix)
 	message_array("Using 3dsmax SDK include path" 3DSMAX_INCPATH)
 	message_array("Using 3dsmax SDK library path" 3DSMAX_LIBPATH)
 
-	message(STATUS "MentalRay install path: ${MENTALRAY_MI_PATH}")
+	message(STATUS "MentalRay shaders path: ${MENTALRAY_SHADER_PATH}")
+	message(STATUS "MentalRay include path: ${MENTALRAY_MI_PATH}")
 
 	set_target_properties(${_target} PROPERTIES SUFFIX ${_suffix})
 
