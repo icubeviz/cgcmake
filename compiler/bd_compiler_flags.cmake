@@ -1,4 +1,7 @@
-add_definitions(-DNDEBUG)
+option(DEFINE_NDEBUG "Define NDEBUG even for debug builds" ON)
+if(DEFINE_NDEBUG)
+	add_definitions(-DNDEBUG)
+endif()
 
 if(WIN32)
 	include_directories(${COMPILER_INCLUDE})
