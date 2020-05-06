@@ -56,6 +56,8 @@ endif()
 
 list(REMOVE_DUPLICATES VRAY_FOR_MAYA_LIBPATH)
 
+list(APPEND VRAY_FOR_MAYA_INCPATH ${VRAY_FOR_MAYA_INCPATH}/vray_maya_sdk)
+
 # This is needed only for old V-Ray SDK's, but still...
 list(APPEND VRAY_FOR_MAYA_INCPATH ${SDK_ROOT}/vray/include)
 list(REMOVE_DUPLICATES VRAY_FOR_MAYA_INCPATH)
