@@ -90,6 +90,12 @@ if(VRAY_VERSION LESS 40)
 	)
 endif()
 
+if(VRAY_VERSION GREATER_EQUAL 51)
+	list(APPEND VRAY_FOR_3DSMAX_DEFINITIONS
+		-DWITH_DR1
+	)
+endif()
+
 macro(bd_init_vray_for_3dsmax)
 	find_path(HAVE_PTRARRAY_HPP ptrarray.hpp PATHS ${VRAY_FOR_3DSMAX_INCPATH})
 	if(HAVE_PTRARRAY_HPP)
