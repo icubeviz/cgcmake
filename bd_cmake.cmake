@@ -39,5 +39,12 @@ macro(bd_parse_version)
     file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/version.h" VERSION_MINOR REGEX "^#define[\t ]+VERSION_MINOR[\t ]+.*")
     string(REGEX REPLACE "^.*VERSION_MINOR[\t ]+([0-9]*).*$" "\\1" VERSION_MINOR "${VERSION_MINOR}")
 
+    string(UUID PRODUCT_CODE NAMESPACE ${ICUBE_NAMESPACE} NAME "${PROJECT_NAME}" TYPE SHA1 UPPER)
+    string(UUID UPDATE_CODE NAMESPACE ${ICUBE_NAMESPACE} NAME "${PROJECT_NAME}_${VERSION_MAJOR}.${VERSION_MINOR}" TYPE SHA1 UPPER)
+
     message(STATUS "${PROJECT_NAME} Version: ${VERSION_MAJOR}.${VERSION_MINOR}")
+    if(WITH_RELEASE)
+        message(STATUS "Product code: ${PRODUCT_CODE}")
+        message(STATUS "Update code:  ${UPDATE_CODE}")
+    endif()
 endmacro()

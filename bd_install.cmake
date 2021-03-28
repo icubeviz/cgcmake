@@ -94,10 +94,16 @@ macro(install_release_3dsmax_vray_custom_var
 endmacro()
 
 
+# This is used for VRayPattern only.
 macro(install_release_3dsmax_vray
 	_target)
 	set_release_paths()
-	install_release_3dsmax_vray_custom_var(${_target} "smaxPluginPath")
+
+	if(3DSMAX_VERSION VERSION_GREATER_EQUAL 2022)
+		install_release_3dsmax_vray_custom_var(${_target} "smaxVRayPluginPath")
+	else()
+		install_release_3dsmax_vray_custom_var(${_target} "smaxPluginPath")
+	endif()
 endmacro()
 
 
