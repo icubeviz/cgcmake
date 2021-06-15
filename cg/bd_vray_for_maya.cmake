@@ -251,7 +251,9 @@ macro(bd_init_vray_for_maya)
 		list(APPEND VRAY_FOR_MAYA_DEFS -DWITH_DR2)
 
 		if(VRAY_VERSION VERSION_GREATER_EQUAL 51)
-			list(APPEND VRAY_FOR_MAYA_DEFS -D__SSE4_1__)
+			if(WIN32)
+				list(APPEND VRAY_FOR_MAYA_DEFS -D__SSE4_1__)
+			endif()
 		endif()
 	endif()
 
