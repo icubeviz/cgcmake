@@ -96,6 +96,8 @@ else()
 
 	if(APPLE)
 	else()
+		add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
+
 		if(VRAY_VERSION VERSION_GREATER_EQUAL 51)
 			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mrecip=none -msse4.2 -ffunction-sections -fdata-sections -ffast-math")
 		endif()
