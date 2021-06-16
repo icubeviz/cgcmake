@@ -94,6 +94,13 @@ else()
 
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings")
 
+	if(APPLE)
+	else()
+		if(VRAY_VERSION VERSION_GREATER_EQUAL 51)
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mrecip=none -msse4.2 -ffunction-sections -fdata-sections -ffast-math")
+		endif()
+	endif()
+
 	set(CMAKE_CXX_FLAGS_RELEASE "-O2 -w -s")
 	set(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g")
 
