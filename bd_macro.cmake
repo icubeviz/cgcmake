@@ -88,7 +88,7 @@ endmacro()
 
 macro(set_plugin_name _project _name)
 	target_compile_definitions(${_project} PRIVATE
-		-DPLUGIN_NAME="${_name}"
+		-DPLUGIN_NAME=${_name}
 	)
 endmacro()
 
