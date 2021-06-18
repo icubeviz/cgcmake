@@ -52,7 +52,7 @@ else()
 		set(WITH_CPP11 ON)
 	endif()
 
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -fvisibility=hidden")
+	set(CMAKE_CXX_FLAGS "-fPIC -fvisibility=hidden")
 
 	# Time measurement.
 	# set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
