@@ -214,7 +214,6 @@ macro(bd_init_vray_for_maya)
 	set(VRAY_FOR_MAYA_DEFS
 		-DVRAY_EXPORTS
 		-DVRAY_VERSION=${VRAY_VERSION}
-		-DWITH_DR1
 	)
 
 	if(ICUBE_VRAY_HAS_GPU_MESH)
@@ -249,12 +248,13 @@ macro(bd_init_vray_for_maya)
 		# 	list(APPEND VRAY_FOR_MAYA_DEFS -DNO_SSE)
 		# endif()
 	else()
-		list(APPEND VRAY_FOR_MAYA_DEFS -DWITH_DR2)
-
 		if(VRAY_VERSION VERSION_GREATER_EQUAL 51)
+			list(APPEND VRAY_FOR_MAYA_DEFS -DWITH_DR1)
 			if(WIN32)
 				list(APPEND VRAY_FOR_MAYA_DEFS -D__SSE4_1__)
 			endif()
+		else()
+			list(APPEND VRAY_FOR_MAYA_DEFS -DWITH_DR2)
 		endif()
 	endif()
 
