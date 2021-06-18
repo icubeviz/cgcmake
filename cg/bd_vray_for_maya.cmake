@@ -214,6 +214,7 @@ macro(bd_init_vray_for_maya)
 	set(VRAY_FOR_MAYA_DEFS
 		-DVRAY_EXPORTS
 		-DVRAY_VERSION=${VRAY_VERSION}
+		-DWITH_DR1
 	)
 
 	if(ICUBE_VRAY_HAS_GPU_MESH)
