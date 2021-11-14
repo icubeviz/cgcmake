@@ -9,12 +9,14 @@ function(bd_arnold_for_3dsmax_setup_target _target)
 		return()
 	endif()
 
+	set(ARNOLD_SDK_ROOT ${SDK_ROOT}/arnold/7.0.0.0/core)
+
 	set(ARNOLD_FOR_3DSMAX_LIBPATH
-		${SDK_ROOT}/arnold/5.4.0.0/core/lib/windows
+		${ARNOLD_SDK_ROOT}/lib/windows
 	)
 
 	set(ARNOLD_FOR_3DSMAX_INCPATH
-		${SDK_ROOT}/arnold/5.4.0.0/core/include
+		${ARNOLD_SDK_ROOT}/include
 		${SDK_ROOT}/arnold/3dsmax/include
 	)
 
