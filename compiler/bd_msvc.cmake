@@ -251,6 +251,33 @@ elseif(CMAKE_GENERATOR STREQUAL "Ninja")
 			${VC_ROOT}/BuildTools/MSBuild/15.0/bin
 			${VC_ROOT}/BuildTools/MSBuild/15.0/bin/Roslyn
 		)
+
+	elseif(MSVC_COMPILER STREQUAL "2019")
+		set(RDG_COMPILER_ID "14.3" CACHE STRING "" FORCE)
+
+		set(VC_ROOT ${SDK_ROOT}/MSVC/2019)
+		set(VC_EXE_PATH ${VC_ROOT}/bin/Hostx64/x64)
+
+		set(COMPILER_INCLUDE
+			${SDK_ROOT}/MSVC/WindowsSDKs/10.0.19041.0/include/shared
+			${SDK_ROOT}/MSVC/WindowsSDKs/10.0.19041.0/include/ucrt
+			${SDK_ROOT}/MSVC/WindowsSDKs/10.0.19041.0/include/um
+			${SDK_ROOT}/MSVC/WindowsSDKs/10.0.19041.0/include/winrt
+			${VC_ROOT}/atlmfc/include
+			${VC_ROOT}/include
+		)
+
+		set(COMPILER_LIBPATH
+			${SDK_ROOT}/MSVC/WindowsSDKs/10.0.19041.0/lib/ucrt/x64
+			${SDK_ROOT}/MSVC/WindowsSDKs/10.0.19041.0/lib/um/x64
+			${VC_ROOT}/atlmfc/lib/x64
+			${VC_ROOT}/lib/x64
+		)
+
+		set(COMPILER_PATH
+			${SDK_ROOT}/MSVC/WindowsSDKs/10.0.19041.0/bin/x64
+			${VC_EXE_PATH}
+		)
 	endif()
 
 	# Create build script for final compilation
