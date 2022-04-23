@@ -3,7 +3,7 @@
 #
 # Andrei Izrantcev <izrantsev@rendering.ru>
 #
-# Copyright (c) iCube R&D Group, www.rendering.ru
+# Copyright (c) iCube R&D Group, www.icube3d.com
 #
 # These coded instructions, statements, and computer programs contain
 # unpublished proprietary information written by iCube R&D Group.
