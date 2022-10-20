@@ -79,9 +79,14 @@ set(VRAY_FOR_3DSMAX_LIBS
 	vutils${VRAY_LIB_SUFFIX}
 	zlib${VRAY_LIB_SUFFIX}
 
-	vray${VRAY_LIB_VERSION}
 	vrender${VRAY_LIB_VERSION}
 )
+
+if(VRAY_VERSION VERSION_GREATER_EQUAL 60)
+	list(APPEND VRAY_FOR_3DSMAX_LIBS vray)
+else()
+	list(APPEND VRAY_FOR_3DSMAX_LIBS vray${VRAY_LIB_VERSION})
+endif()
 
 # Intel libs (from V-Ray SDK, < 4.x only)
 if(VRAY_VERSION LESS 40)
