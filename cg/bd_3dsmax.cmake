@@ -142,6 +142,10 @@ if(3DSMAX_VERSION GREATER 2011)
 	)
 endif()
 
+if(3DSMAX_VERSION VERSION_GREATER_EQUAL 2024)
+	list(APPEND 3DSMAX_DEFINITIONS -DNOMINMAX)
+endif()
+
 if(3DSMAX_VERSION VERSION_LESS 2011)
 	set(MENTALRAY_SHADER_PATH "${3DSMAX_ROOT}/mentalray/shaders_autoload/shaders")
 	set(MENTALRAY_MI_PATH     "${3DSMAX_ROOT}/mentalray/shaders_autoload/include")
