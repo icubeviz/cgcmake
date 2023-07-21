@@ -1,8 +1,3 @@
-option(DEFINE_NDEBUG "Define NDEBUG even for debug builds" ON)
-if(DEFINE_NDEBUG)
-	add_definitions(-DNDEBUG)
-endif()
-
 if(WIN32)
 	include_directories(${COMPILER_INCLUDE})
 	link_directories(${COMPILER_LIBPATH})
@@ -17,10 +12,9 @@ if(WIN32)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /FS")
 	endif()
 
-	set(CMAKE_CXX_FLAGS_RELEASE "/Ob1 /W0 /MD")
-	set(CMAKE_CXX_FLAGS_DEBUG   "/Od /Ob0 /RTC1")
+	set(CMAKE_CXX_FLAGS_RELEASE "/Ob1 /W0 /MD /DNDEBUG")
+	set(CMAKE_CXX_FLAGS_DEBUG   "/Od /Ob0 /RTC1 /Z7 /DNDEBUG")
 
-	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Z7")
 	set(CMAKE_SHARED_LINKER_FLAGS_DEBUG "/debug /INCREMENTAL:NO")
 
 	option(WITH_PBD "Build with PDB" OFF)
